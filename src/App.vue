@@ -8,6 +8,15 @@
     <el-button type="warning" :icon="Star" circle></el-button>
     <el-button type="danger" :icon="Delete" circle></el-button>
     <svg-icon name="refresh" spin></svg-icon>
+    <el-switch
+      v-model="isDark"
+      class="theme-btn"
+      style="margin-left: 24px"
+      inline-prompt
+      :active-icon="Moon"
+      :inactive-icon="Sunny"
+      @change="toggleDark"
+    />
   </div>
 </template>
 
@@ -21,4 +30,9 @@ import {
   Star,
   Delete,
 } from '@element-plus/icons-vue'
+import { useDark, useToggle } from '@vueuse/core'
+
+// 暗黑主题切换
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
