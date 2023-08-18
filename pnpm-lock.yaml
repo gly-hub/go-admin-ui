@@ -32,6 +32,7 @@ specifiers:
   stylelint-config-recess-order: ^4.3.0
   stylelint-config-recommended-scss: ^12.0.0
   stylelint-config-standard: ^34.0.0
+  stylelint-config-standard-scss: ^10.0.0
   stylelint-config-standard-vue: ^1.0.0
   stylelint-order: ^6.0.3
   stylelint-scss: ^5.1.0
@@ -76,6 +77,7 @@ devDependencies:
   stylelint-config-recess-order: 4.3.0_stylelint@15.10.2
   stylelint-config-recommended-scss: 12.0.0_esslwhiun4caolhcodb5zgtzaq
   stylelint-config-standard: 34.0.0_stylelint@15.10.2
+  stylelint-config-standard-scss: 10.0.0_esslwhiun4caolhcodb5zgtzaq
   stylelint-config-standard-vue: 1.0.0_f4bksk7wdmmh6mf4m77wivwcdq
   stylelint-order: 6.0.3_stylelint@15.10.2
   stylelint-scss: 5.1.0_stylelint@15.10.2
@@ -4928,6 +4930,21 @@ packages:
       stylelint: 15.10.2
     dev: true
 
+  /stylelint-config-standard-scss/10.0.0_esslwhiun4caolhcodb5zgtzaq:
+    resolution: {integrity: sha512-bChBEo1p3xUVWh/wenJI+josoMk21f2yuLDGzGjmKYcALfl2u3DFltY+n4UHswYiXghqXaA8mRh+bFy/q1hQlg==}
+    peerDependencies:
+      postcss: ^8.3.3
+      stylelint: ^15.5.0
+    peerDependenciesMeta:
+      postcss:
+        optional: true
+    dependencies:
+      postcss: 8.4.28
+      stylelint: 15.10.2
+      stylelint-config-recommended-scss: 12.0.0_esslwhiun4caolhcodb5zgtzaq
+      stylelint-config-standard: 33.0.0_stylelint@15.10.2
+    dev: true
+
   /stylelint-config-standard-vue/1.0.0_f4bksk7wdmmh6mf4m77wivwcdq:
     resolution: {integrity: sha512-wAzU7p6DSlo04pWfCbOcaMq09Nojt0FEsbdxhCBTdC7IguD9ZVl7FP/bvyA0HAHjZGC4JkW7m6WiQaoVMDSuFw==}
     engines: {node: ^12 || >=14}
@@ -4940,6 +4957,15 @@ packages:
       stylelint-config-html: 1.1.0_f4bksk7wdmmh6mf4m77wivwcdq
       stylelint-config-recommended-vue: 1.5.0_f4bksk7wdmmh6mf4m77wivwcdq
       stylelint-config-standard: 34.0.0_stylelint@15.10.2
+    dev: true
+
+  /stylelint-config-standard/33.0.0_stylelint@15.10.2:
+    resolution: {integrity: sha512-eyxnLWoXImUn77+ODIuW9qXBDNM+ALN68L3wT1lN2oNspZ7D9NVGlNHb2QCUn4xDug6VZLsh0tF8NyoYzkgTzg==}
+    peerDependencies:
+      stylelint: ^15.5.0
+    dependencies:
+      stylelint: 15.10.2
+      stylelint-config-recommended: 12.0.0_stylelint@15.10.2
     dev: true
 
   /stylelint-config-standard/34.0.0_stylelint@15.10.2:
