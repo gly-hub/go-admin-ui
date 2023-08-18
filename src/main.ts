@@ -5,5 +5,16 @@ import ElementPlus from 'element-plus'
 import 'element-plus/theme-chalk/index.css'
 import 'virtual:svg-icons-register'
 import registerGlobComp from '@/components'
+import { setupStore } from '@/store'
 
-createApp(App).use(registerGlobComp).use(ElementPlus).mount('#app')
+async function bootstrap() {
+  const app = createApp(App)
+  app.use(registerGlobComp)
+  app.use(ElementPlus)
+
+  setupStore(app)
+
+  app.mount('#app')
+}
+
+bootstrap()
