@@ -17,21 +17,30 @@
       <div class="bg-item left three"></div>
       <div class="bg-item right four"></div>
     </div>
-    <reset-password
-      class="reset-password"
-      @update:showResetPassword="1"
-    ></reset-password>
+    <div class="loogin-container">
+      <el-button
+        class="login-btn"
+        type="primary"
+        @click="loginHandle(ruleFormRef)"
+      >
+        登录
+      </el-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { Sunny, Moon } from '@element-plus/icons-vue'
-import resetPassword from './resetPassword.vue'
 import { useDark, useToggle } from '@vueuse/core'
+import { login } from '@/api'
 
 // 暗黑主题切换
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const loginHandle = () => {
+  login()
+}
 </script>
 
 <style>
@@ -172,3 +181,4 @@ input:-webkit-autofill:active {
   margin: 20px auto;
 }
 </style>
+@/api/login
