@@ -1,9 +1,13 @@
+import { RESEETSTORE } from '@/store/reset'
 import axios, {
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios'
 import { ElMessage, ElLoading } from 'element-plus'
+import router from '@/router'
+import { useUserStore } from '@/store/modules/user'
+
 const loadingInstance = ElLoading.service
 let requestCount = 0
 const showLoading = () => {
@@ -21,7 +25,6 @@ const closeLoading = () => {
 }
 
 const service: AxiosInstance = axios.create({
-  method: 'get',
   baseURL: import.meta.env.VITE_APP_BASE_API,
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
@@ -61,9 +64,12 @@ service.interceptors.request.use(
     const { loading = true, isToken = true } = config
 
     if (loading) showLoading()
-    if (localStorage.getItem('token') && !isToken) {
-      config.headers['Authorization'] =
-        'Bearer ' + localStorage.getItem('token') // 让每个请求携带自定义token 请根据实际情况自行修改
+    const userStore = useUserStore()
+    const token = userStore.token
+
+    if (token && isToken) {
+      console.log(token, isToken)
+      config.headers['s-token'] = token // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     return config
   },
@@ -84,13 +90,16 @@ service.interceptors.response.use(
         message: data.message,
         type: 'error',
       })
-      if (data.code === 401) {
+      if (data.code === 100001) {
         //登录状态已过期.处理路由重定向
-        console.log('loginOut')
+        RESEETSTORE()
+        ElMessage.error(data.message || '请求接口错误')
+        router.replace('/login')
+        return Promise.reject(data)
       }
-      throw new Error(data.describe)
+      throw new Error(data.message)
     }
-    return data
+    return data.data
   },
   (error) => {
     closeLoading()

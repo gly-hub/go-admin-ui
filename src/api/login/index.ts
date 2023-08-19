@@ -8,3 +8,18 @@ export const login = (data: any) => {
     method: 'post',
   })
 }
+
+export const logout = () => {
+  return request({
+    url: '/logout',
+    method: 'post',
+  })
+}
+
+export const getUserInfo = () => {
+  return request({
+    url: '/user_info',
+    method: 'get',
+    isToken: true,
+  })
+}

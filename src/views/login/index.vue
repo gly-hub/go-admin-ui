@@ -1,184 +1,126 @@
 <template>
-  <div class="login-wrap">
-    <el-switch
-      v-model="isDark"
-      class="theme-btn"
-      style="margin-left: 24px"
-      inline-prompt
-      :active-icon="Moon"
-      :inactive-icon="Sunny"
-      @change="toggleDark"
-    />
-    <h1>2222</h1>
-    <!-- 背景 -->
-    <div class="back-wrap">
-      <div class="bg-item left one"></div>
-      <div class="bg-item right two"></div>
-      <div class="bg-item left three"></div>
-      <div class="bg-item right four"></div>
-    </div>
-    <div class="loogin-container">
-      <el-button
-        class="login-btn"
-        type="primary"
-        @click="loginHandle(ruleFormRef)"
-      >
-        登录
-      </el-button>
-    </div>
+  <div class="login-container">
+    <el-alert
+      v-show="false"
+      title="尚品汇商城管理平台"
+      type="success"
+      :closable="false"
+      style="position: fixed"
+    ></el-alert>
+    <el-row>
+      <el-col :xs="24" :sm="24" :md="12" :lg="14" :xl="14">
+        <div style="color: transparent">左侧区域占位符</div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="10" :xl="10">
+        <el-form
+          ref="ruleFormRef"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          class="login-form"
+        >
+          <div class="form-header">
+            <div class="title">hello !</div>
+            <div class="title-tips">欢迎来到go-admin</div>
+          </div>
+          <el-form-item prop="username">
+            <el-input
+              v-model="ruleForm.email"
+              :prefix-icon="User"
+              autocomplete="off"
+              placeholder="请输入用户名"
+            />
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              v-model="ruleForm.password"
+              type="password"
+              show-password
+              :prefix-icon="Lock"
+              autocomplete="off"
+              placeholder="请输入密码"
+            />
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              class="login-btn"
+              type="primary"
+              size="large"
+              :loading="loading"
+              @click="submitForm(ruleFormRef)"
+            >
+              登陆
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { Sunny, Moon } from '@element-plus/icons-vue'
-import { useDark, useToggle } from '@vueuse/core'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useUserStore } from '@/store/modules/user'
+import type { FormInstance } from 'element-plus'
+import { User, Lock } from '@element-plus/icons-vue'
+import { ElNotification } from 'element-plus'
 import { login } from '@/api'
+const router = useRouter()
+const route = useRoute()
+const ruleFormRef = ref<FormInstance>()
+const userStore = useUserStore()
+const ruleForm = reactive({
+  email: 'fangao@staruniongame.com',
+  password: 'gao123456',
+})
+const loading = ref(false)
+const validateUsername = (rule: any, value: string, callback: any) => {
+  if (value === '') {
+    callback(new Error('用户名不能为空'))
+  } else if (value.length < 4) {
+    callback(new Error('用户名长度不能小于4位'))
+  } else {
+    callback()
+  }
+}
 
-// 暗黑主题切换
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const validatePassword = (rule: any, value: string, callback: any) => {
+  if (value === '') {
+    callback(new Error('密码不能为空'))
+  } else if (value.length < 6) {
+    callback(new Error('密码长度不能小于6位'))
+  } else {
+    callback()
+  }
+}
 
-const loginHandle = () => {
-  login()
+const rules = reactive({
+  email: [{ required: true, validator: validateUsername }],
+  password: [{ required: true, validator: validatePassword }],
+})
+
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate(async (valid) => {
+    if (!valid) return
+    try {
+      loading.value = true
+      const { token } = await login(ruleForm)
+      userStore.setToken(token)
+      router.replace((route.query.redirect as string) || '/')
+      ElNotification({
+        title: `hi!`,
+        message: `欢迎回来`,
+        type: 'success',
+      })
+    } finally {
+      loading.value = false
+    }
+  })
 }
 </script>
 
-<style>
-input:-internal-autofill-selected {
-  color: rgb(255 255 255) !important;
-  background-color: transparent !important;
-  background-image: none !important;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-transition: background-color 50000s ease-out;
-  transition: background-color 50000s ease-out;
-  -webkit-transition-delay: 50000s;
-  transition-delay: 500000s;
-}
-</style>
 <style scoped lang="scss">
-.login-wrap {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background-color: var(--el-color-primary-light-5);
-}
-
-.theme-btn {
-  position: absolute;
-  top: 50px;
-  right: 100px;
-  z-index: 9;
-}
-
-// 背景
-.back-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: var(--el-color-primary-light-9);
-
-  .bg-item {
-    position: absolute;
-
-    &.left {
-      bottom: 0;
-      left: 0;
-      filter: drop-shadow(5px 0 20px rgb(0 0 0 / 10%));
-    }
-
-    &.right {
-      right: 0;
-      bottom: 0;
-      filter: drop-shadow(-5px 0 20px rgb(0 0 0 / 20%));
-    }
-
-    &.one {
-      z-index: 6;
-      border-right: 60vw solid transparent;
-      border-bottom: 50vh solid var(--el-color-primary-light-3);
-    }
-
-    &.two {
-      z-index: 5;
-      border-bottom: 70vh solid var(--el-color-primary-light-5);
-      border-left: 80vw solid transparent;
-    }
-
-    &.three {
-      z-index: 4;
-      border-right: 90vw solid transparent;
-      border-bottom: 90vh solid var(--el-color-primary-light-7);
-    }
-
-    &.four {
-      z-index: 3;
-      border-bottom: 110vh solid var(--el-color-primary-light-8);
-      border-left: 110vw solid transparent;
-    }
-  }
-}
-
-.loogin-container {
-  position: relative;
-  z-index: 2;
-  padding: 20px;
-}
-
-.login-title {
-  font-size: 48px;
-  color: var(--color-primary);
-}
-
-.form-wrap {
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 5vh;
-  color: var(--color-text-2);
-
-  :deep(.el-input__wrapper) {
-    border: 1px solid var(--el-color-primary-light-3);
-    border-radius: 5px;
-    outline: none;
-    box-shadow: none;
-
-    &.is-focus,
-    &:hover {
-      box-shadow: 0 0 0 1px var(--el-color-primary) inset !important;
-    }
-  }
-
-  :deep(.el-input__prefix) {
-    color: var(--color-text-2);
-  }
-
-  :deep(.el-input__inner) {
-    // color: var(--color-text-2);
-    // outline: none;
-    height: 40px;
-  }
-}
-
-.other-wrap {
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 10px;
-  text-align: right;
-}
-
-.login-btn {
-  // font-size: 16px;
-  display: block;
-  width: 400px;
-  height: 40px;
-  margin: 20px auto;
-}
+@import './index';
 </style>
-@/api/login
