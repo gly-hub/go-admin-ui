@@ -8,7 +8,7 @@ import 'virtual:svg-icons-register'
 import registerGlobComp from '@/components'
 import { setupStore } from '@/store'
 
-import router from '@/router'
+import { setupRouter } from '@/router'
 
 async function bootstrap() {
   const app = createApp(App)
@@ -16,7 +16,7 @@ async function bootstrap() {
   app.use(ElementPlus)
 
   setupStore(app)
-  app.use(router)
+  setupRouter(app)
 
   app.mount('#app')
 }

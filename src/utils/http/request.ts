@@ -8,7 +8,12 @@ const loadingInstance = ElLoading.service
 let requestCount = 0
 const showLoading = () => {
   requestCount++
-  if (requestCount === 1) loadingInstance()
+  if (requestCount === 1)
+    loadingInstance({
+      lock: true,
+      text: 'loading',
+      background: 'rgba(0,0,0,0.5)',
+    })
 }
 const closeLoading = () => {
   requestCount--
@@ -17,7 +22,7 @@ const closeLoading = () => {
 
 const service: AxiosInstance = axios.create({
   method: 'get',
-  baseURL: import.meta.env.VITE_APP_API,
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
   },
@@ -27,15 +32,16 @@ const service: AxiosInstance = axios.create({
 //请求拦截
 
 declare module 'axios' {
-  interface InternalAxiosRequestConfig<> {
+  interface AxiosRequestConfig {
     loading?: boolean
     isToken?: boolean
   }
-}
-declare module 'axios' {
-  interface AxiosRequestConfig<> {
+  interface InternalAxiosRequestConfig {
     loading?: boolean
     isToken?: boolean
+  }
+  interface AxiosInstance {
+    (config: AxiosRequestConfig): Promise<any>
   }
 }
 
@@ -51,7 +57,6 @@ service.interceptors.request.use(
     } else {
       requestMap.set(key, controller)
     }
-    console.log(123)
 
     const { loading = true, isToken = true } = config
 
@@ -60,7 +65,6 @@ service.interceptors.request.use(
       config.headers['Authorization'] =
         'Bearer ' + localStorage.getItem('token') // 让每个请求携带自定义token 请根据实际情况自行修改
     }
-
     return config
   },
   (error) => {
@@ -75,9 +79,9 @@ service.interceptors.response.use(
     const { loading = true } = config
     if (loading) closeLoading()
 
-    if (data.code != 200) {
+    if (data.code != 20000) {
       ElMessage({
-        message: data.describe,
+        message: data.message,
         type: 'error',
       })
       if (data.code === 401) {
