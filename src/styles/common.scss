@@ -1,0 +1,254 @@
+// su-  star union统一前缀
+
+@mixin su-container {
+  padding: 24px;
+  overflow: hidden;
+  background-color: white;
+}
+
+/** 功能页面布局样式 */
+.su-card {
+  background-color: white;
+}
+
+.su-container {
+  @include su-container;
+}
+
+.tab-flex1 {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .el-tabs__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .el-tab-pane {
+    flex: 1;
+  }
+}
+
+.su-tabs {
+  .el-tabs__item {
+    padding: 0;
+    margin-right: 40px;
+  }
+
+  .el-tabs__nav {
+    padding: 0 24px;
+  }
+}
+
+// 表格容器
+.su-table-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  .header-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    // form-item有个margin-bottom，所以下边距要减去12
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    @include su-container;
+
+    .form-item {
+      margin-right: 24px;
+    }
+
+    > div {
+      margin-bottom: 12px;
+    }
+  }
+
+  .table-container {
+    flex: 1;
+    @include su-container;
+  }
+
+  .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .table-title {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #000;
+  }
+
+  .el-pagination {
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+}
+
+// 页面容器
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  h1 {
+    height: 28px;
+    margin: 0;
+    margin-bottom: 24px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #000;
+  }
+
+  .su-tabs {
+    padding-top: 10px;
+  }
+
+  &.tab-page {
+    .su-table-container .header-form {
+      padding-top: 16px;
+    }
+  }
+
+  .page-body {
+    &:not(.su-table-container) {
+      @include su-container;
+    }
+
+    flex: 1;
+  }
+
+  .center-ctn {
+    max-width: 1300px;
+    padding-top: 12px;
+    margin: 0 auto;
+  }
+}
+
+// 描述区块
+.section-block {
+  margin-bottom: 24px;
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    height: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #303133;
+
+    &.hd-quote {
+      position: relative;
+      padding-left: 10px;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 2px;
+        height: 16px;
+        content: '';
+        background: var(--color-primary);
+        border-radius: 1px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .section-desc {
+    height: 20px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #606266;
+  }
+
+  .section-desc,
+  .section-content {
+    margin-top: 13px;
+  }
+}
+
+// 模拟表单样式
+.form-item {
+  margin-bottom: 18px;
+
+  .form-item-label {
+    box-sizing: border-box;
+    display: block;
+    height: auto;
+    padding: 0 12px 0 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--el-text-color-regular);
+  }
+
+  &.is-required .form-item-label::before {
+    margin-right: 4px;
+    color: var(--el-color-danger);
+    content: '*';
+  }
+
+  .form-item-content {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    min-width: 0;
+    font-size: 14px;
+    line-height: 32px;
+    color: #303133;
+  }
+}
+
+// flex布局
+.align-row {
+  display: flex;
+  align-items: center;
+}
+
+.mh-full {
+  min-height: 100%;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+// 文字按钮
+.text-btn {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+// 溢出省略号
+.ellipsis {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 空状态的居中
+.empty-box {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}

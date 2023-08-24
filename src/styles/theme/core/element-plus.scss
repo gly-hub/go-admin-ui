@@ -1,0 +1,45 @@
+/** Element Plus 相关 */
+
+// 侧边栏的 item 的 popper
+.el-popper {
+  border: none !important;
+
+  .el-menu {
+    background-color: color.adjust($theme-bg-color, $lightness: 2%) !important;
+
+    .el-menu-item {
+      background-color: color.adjust(
+        $theme-bg-color,
+        $lightness: 2%
+      ) !important;
+
+      &.is-active,
+      &:hover {
+        color: $active-font-color !important;
+        background-color: color.adjust(
+          $theme-bg-color,
+          $lightness: 6%
+        ) !important;
+      }
+    }
+
+    .el-sub-menu__title {
+      background-color: color.adjust(
+        $theme-bg-color,
+        $lightness: 2%
+      ) !important;
+    }
+
+    .el-sub-menu {
+      &.is-active {
+        > .el-sub-menu__title {
+          color: $active-font-color !important;
+        }
+      }
+    }
+  }
+
+  .el-menu--horizontal {
+    border: none;
+  }
+}

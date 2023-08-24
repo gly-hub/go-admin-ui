@@ -1,0 +1,8 @@
+.#{$theme-name} {
+  @import './layouts';
+  @import './login';
+  @import './error-page';
+  @import './element-plus';
+  @import './vxe-table';
+  @import './other';
+}

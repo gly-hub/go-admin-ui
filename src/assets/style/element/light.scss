@@ -5,25 +5,34 @@
   //
   $colors:
     (
+      //
       'white': map.get($light, --color-white),
       'black': map.get($light, --color-black),
       'primary': (
-        'base': map.get($light, --color-primary),
+        //
+        'base': map.get($light, --color-primary)
       ),
       'success': (
-        'base': map.get($light, --color-success),
+        //
+        'base': map.get($light, --color-success)
       ),
       'warning': (
-        'base': map.get($light, --color-warning),
+        //
+        'base': map.get($light, --color-warning)
       ),
       'danger': (
-        'base': map.get($light, --color-danger),
+        //
+        'base': map.get($light, --color-danger)
       ),
       'error': (
-        'base': map.get($light, --color-error),
+        //
+        'base': map.get($light, --color-error)
       ),
       'info': (
-        'base': map.get($light, --color-info),
+        //
+        'base': map.get($light, --color-info)
       )
     )
 );
+
+// @use "element-plus/theme-chalk/src/common/var.scss";

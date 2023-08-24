@@ -1,14 +1,50 @@
+<script lang="ts" setup>
+import { ref } from 'vue'
+
+defineOptions({
+  name: 'Menu1-1',
+})
+
+const text = ref('')
+</script>
+
 <template>
-  <div>
-    <h1>首页</h1>
-    <svg-icon name="refresh" spin></svg-icon>
-    <el-button @click="submit()">test</el-button>
+  <div class="app-container">
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
+    <el-card header="三级路由缓存 - menu1-1">
+      <el-input v-model="text" />
+    </el-card>
   </div>
 </template>
-
-<script setup lang="ts">
-import { getUserInfo } from '@/api/login'
-const submit = () => {
-  console.log(getUserInfo())
-}
-</script>
