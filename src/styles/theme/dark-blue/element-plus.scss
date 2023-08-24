@@ -8,6 +8,7 @@
 @use 'element-plus/theme-chalk/src/mixins/function.scss' as *;
 @use 'element-plus/theme-chalk/src/mixins/_var.scss' as *;
 @use 'element-plus/theme-chalk/src/mixins/mixins.scss' as *;
+@use 'sass:color';
 @use './variables.scss' as *;
 
 // 生成指定颜色的明亮/黑暗颜色

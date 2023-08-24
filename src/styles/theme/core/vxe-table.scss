@@ -2,6 +2,7 @@
  * Vxe Table SCSS 变量
  * 在此查阅所有可自定义的变量：https://github.com/x-extends/vxe-table/blob/master/styles/variable.scss
  */
+@use 'sass:color';
 
 /** font */
 $vxe-font-color: $font-color;
