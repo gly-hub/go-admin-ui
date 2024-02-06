@@ -28,7 +28,3 @@ export const getAdminRoleApi = (
 ): Promise<IResponse<AppCustomRouteRecordRaw[]>> => {
   return request.get({ url: '/role/list', params })
 }
-
-export const getTestRoleApi = (params: RoleParams): Promise<IResponse<string[]>> => {
-  return request.get({ url: '/role/list', params })
-}

@@ -3,7 +3,7 @@ import { usePermissionStore } from '@/store/modules/permission'
 import { useAppStore } from '@/store/modules/app'
 import { computed, unref, defineComponent, watch, ref, onMounted } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
-import { ElScrollbar } from 'element-plus'
+import { ElScrollbar, ClickOutside } from 'element-plus'
 import { Icon } from '@/components/Icon'
 import { Menu } from '@/components/Menu'
 import { useRouter } from 'vue-router'
@@ -19,6 +19,9 @@ const prefixCls = getPrefixCls('tab-menu')
 
 export default defineComponent({
   name: 'TabMenu',
+  directives: {
+    ClickOutside
+  },
   setup() {
     const { push, currentRoute } = useRouter()
 
@@ -105,7 +108,8 @@ export default defineComponent({
       tabActive.value = item.children ? item.path : item.path.split('/')[0]
       if (item.children) {
         if (newPath === oldPath || !unref(showMenu)) {
-          showMenu.value = unref(fixedMenu) ? true : !unref(showMenu)
+          // showMenu.value = unref(fixedMenu) ? true : !unref(showMenu)
+          showMenu.value = !unref(showMenu)
         }
         if (unref(showMenu)) {
           permissionStore.setMenuTabRouters(
@@ -131,14 +135,16 @@ export default defineComponent({
       return false
     }
 
-    const mouseleave = () => {
-      if (!unref(showMenu) || unref(fixedMenu)) return
-      showMenu.value = false
+    const clickOut = () => {
+      if (!unref(fixedMenu)) {
+        showMenu.value = false
+      }
     }
 
     return () => (
       <div
         id={`${variables.namespace}-menu`}
+        v-click-outside={clickOut}
         class={[
           prefixCls,
           'relative bg-[var(--left-menu-bg-color)] top-1px layout-border__right',
@@ -147,7 +153,6 @@ export default defineComponent({
             'w-[var(--tab-menu-min-width)]': unref(collapse)
           }
         ]}
-        onMouseleave={mouseleave}
       >
         <ElScrollbar class="!h-[calc(100%-var(--tab-menu-collapse-height)-1px)]">
           <div>
@@ -178,7 +183,7 @@ export default defineComponent({
                       <Icon icon={item?.meta?.icon}></Icon>
                     </div>
                     {!unref(showTitle) ? undefined : (
-                      <p class="break-words mt-5px px-2px">{t(item.meta?.title)}</p>
+                      <p class="break-words mt-5px px-2px">{t(item.meta?.title || '')}</p>
                     )}
                   </div>
                 )
@@ -197,11 +202,11 @@ export default defineComponent({
         </div>
         <Menu
           class={[
-            '!absolute top-0',
+            '!absolute top-0 z-1000',
             {
               '!left-[var(--tab-menu-min-width)]': unref(collapse),
               '!left-[var(--tab-menu-max-width)]': !unref(collapse),
-              '!w-[calc(var(--left-menu-max-width)+1px)]': unref(showMenu) || unref(fixedMenu),
+              '!w-[var(--left-menu-max-width)]': unref(showMenu) || unref(fixedMenu),
               '!w-0': !unref(showMenu) && !unref(fixedMenu)
             }
           ]}

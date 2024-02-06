@@ -21,6 +21,7 @@ interface AppState {
   fixedHeader: boolean
   greyMode: boolean
   dynamicRouter: boolean
+  serverDynamicRouter: boolean
   pageLoading: boolean
   layout: LayoutType
   title: string
@@ -42,11 +43,10 @@ export const useAppStore = defineStore('app', {
       mobile: false, // 是否是移动端
       title: import.meta.env.VITE_APP_TITLE, // 标题
       pageLoading: false, // 路由跳转loading
-
       breadcrumb: true, // 面包屑
       breadcrumbIcon: true, // 面包屑图标
       collapse: false, // 折叠菜单
-      uniqueOpened: false, // 是否只保持一个子菜单的展开
+      uniqueOpened: true, // 是否只保持一个子菜单的展开
       hamburger: true, // 折叠图标
       screenfull: true, // 全屏图标
       size: true, // 尺寸图标
@@ -57,33 +57,34 @@ export const useAppStore = defineStore('app', {
       fixedHeader: true, // 固定toolheader
       footer: true, // 显示页脚
       greyMode: false, // 是否开始灰色模式，用于特殊悼念日
-      dynamicRouter: getStorage('dynamicRouter') || false, // 是否动态路由
-      fixedMenu: getStorage('fixedMenu') || false, // 是否固定菜单
+      dynamicRouter: true, // 是否动态路由
+      serverDynamicRouter: true, // 是否服务端渲染动态路由
+      fixedMenu: getStorage('fixedMenu'), // 是否固定菜单
 
       layout: getStorage('layout') || 'classic', // layout布局
-      isDark: getStorage('isDark') || false, // 是否是暗黑模式
-      currentSize: getStorage('default') || 'default', // 组件尺寸
+      isDark: getStorage('isDark'), // 是否是暗黑模式
+      currentSize: getStorage('currentSize') || 'default', // 组件尺寸
       theme: getStorage('theme') || {
         // 主题色
-        elColorPrimary: '#409eff',
+        elColorPrimary: '#536dfe',
         // 左侧菜单边框颜色
         leftMenuBorderColor: 'inherit',
         // 左侧菜单背景颜色
-        leftMenuBgColor: '#001529',
+        leftMenuBgColor: '#fff',
         // 左侧菜单浅色背景颜色
-        leftMenuBgLightColor: '#0f2438',
+        leftMenuBgLightColor: '#fff',
         // 左侧菜单选中背景颜色
-        leftMenuBgActiveColor: 'var(--el-color-primary)',
+        leftMenuBgActiveColor: 'RGBA(83,109,254,0.1)',
         // 左侧菜单收起选中背景颜色
-        leftMenuCollapseBgActiveColor: 'var(--el-color-primary)',
+        leftMenuCollapseBgActiveColor: 'RGBA(83,109,254,0.1)',
         // 左侧菜单字体颜色
-        leftMenuTextColor: '#bfcbd9',
+        leftMenuTextColor: '#333',
         // 左侧菜单选中字体颜色
-        leftMenuTextActiveColor: '#fff',
+        leftMenuTextActiveColor: 'var(--el-color-primary)',
         // logo字体颜色
-        logoTitleTextColor: '#fff',
+        logoTitleTextColor: 'inherit',
         // logo边框颜色
-        logoBorderColor: 'inherit',
+        logoBorderColor: '#eee',
         // 头部背景颜色
         topHeaderBgColor: '#fff',
         // 头部字体颜色
@@ -137,6 +138,9 @@ export const useAppStore = defineStore('app', {
     },
     getDynamicRouter(): boolean {
       return this.dynamicRouter
+    },
+    getServerDynamicRouter(): boolean {
+      return this.serverDynamicRouter
     },
     getFixedMenu(): boolean {
       return this.fixedMenu
@@ -215,6 +219,10 @@ export const useAppStore = defineStore('app', {
     setDynamicRouter(dynamicRouter: boolean) {
       setStorage('dynamicRouter', dynamicRouter)
       this.dynamicRouter = dynamicRouter
+    },
+    setServerDynamicRouter(serverDynamicRouter: boolean) {
+      setStorage('serverDynamicRouter', serverDynamicRouter)
+      this.serverDynamicRouter = serverDynamicRouter
     },
     setFixedMenu(fixedMenu: boolean) {
       setStorage('fixedMenu', fixedMenu)

@@ -93,7 +93,9 @@ export default {
     footer: 'Footer',
     uniqueOpened: 'Unique opened',
     tagsViewIcon: 'Tags view icon',
-    dynamicRouter: 'Dynamic router',
+    // 开启动态路由
+    dynamicRouter: 'Enable dynamic router',
+    serverDynamicRouter: 'Server dynamic router',
     reExperienced: 'Please exit the login experience again',
     fixedMenu: 'Fixed menu'
   },
@@ -147,6 +149,7 @@ export default {
     defaultTable: 'Basic example',
     editor: 'Editor',
     richText: 'Rich text',
+    jsonEditor: 'JSON Editor',
     dialog: 'Dialog',
     imageViewer: 'Image viewer',
     descriptions: 'Descriptions',
@@ -171,7 +174,10 @@ export default {
     permission: 'Permission test page',
     function: 'Function',
     multipleTabs: 'Multiple tabs',
-    details: 'Details'
+    details: 'Details',
+    iconPicker: 'Icon picker',
+    request: 'Request',
+    waterfall: 'Waterfall'
   },
   permission: {
     hasPermission: 'Please set the operation permission value'
@@ -300,6 +306,7 @@ export default {
     verifyReset: 'Verify reset',
     // 富文本编辑器
     richText: 'Rich text',
+    jsonEditor: 'JSON Editor',
     form: 'Form',
     // 远程加载
     remoteLoading: 'Remote loading',
@@ -316,7 +323,8 @@ export default {
     lazyLoad: 'Lazy load',
     upload: 'Upload',
     // 用户头像
-    userAvatar: 'User avatar'
+    userAvatar: 'User avatar',
+    iconPicker: 'Icon picker'
   },
   guideDemo: {
     guide: 'Guide',
@@ -448,7 +456,9 @@ export default {
   },
   richText: {
     richText: 'Rich text',
-    richTextDes: 'Secondary packaging based on wangeditor'
+    richTextDes: 'Secondary packaging based on wangeditor',
+    jsonEditor: 'JSON Editor',
+    jsonEditorDes: 'Secondary packaging based on vue-json-pretty'
   },
   dialogDemo: {
     dialog: 'Dialog',

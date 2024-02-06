@@ -32,21 +32,23 @@ import { defineComponent } from 'vue'
     permission: ['edit','add', 'delete']    设置该路由的权限
   }
 **/
+
+interface RouteMetaCustom extends Record<string | number | symbol, unknown> {
+  hidden?: boolean
+  alwaysShow?: boolean
+  title?: string
+  icon?: string
+  noCache?: boolean
+  breadcrumb?: boolean
+  affix?: boolean
+  activeMenu?: string
+  noTagsView?: boolean
+  canTo?: boolean
+  permission?: string[]
+}
+
 declare module 'vue-router' {
-  interface RouteMeta extends Record<string | number | symbol, unknown> {
-    hidden?: boolean
-    alwaysShow?: boolean
-    title?: string
-    icon?: string
-    noCache?: boolean
-    breadcrumb?: boolean
-    affix?: boolean
-    activeMenu?: string
-    noTagsView?: boolean
-    followAuth?: string
-    canTo?: boolean
-    permission?: string[]
-  }
+  interface RouteMeta extends RouteMetaCustom {}
 }
 
 type Component<T = any> =
@@ -55,18 +57,19 @@ type Component<T = any> =
   | (() => Promise<T>)
 
 declare global {
-  declare interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  declare interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta' | 'children'> {
     name: string
-    meta: RouteMeta
+    meta: RouteMetaCustom
     component?: Component | string
     children?: AppRouteRecordRaw[]
     props?: Recordable
     fullPath?: string
   }
 
-  declare interface AppCustomRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  declare interface AppCustomRouteRecordRaw
+    extends Omit<RouteRecordRaw, 'meta' | 'component' | 'children'> {
     name: string
-    meta: RouteMeta
+    meta: RouteMetaCustom
     component: string
     path: string
     redirect: string

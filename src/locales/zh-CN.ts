@@ -93,7 +93,8 @@ export default {
     footer: '页脚',
     uniqueOpened: '菜单手风琴',
     tagsViewIcon: '标签页图标',
-    dynamicRouter: '动态路由',
+    dynamicRouter: '开启动态路由',
+    serverDynamicRouter: '服务端动态路由',
     reExperienced: '请重新退出登录体验',
     fixedMenu: '固定菜单'
   },
@@ -147,6 +148,7 @@ export default {
     defaultTable: '基础示例',
     editor: '编辑器',
     richText: '富文本',
+    jsonEditor: 'JSON编辑器',
     dialog: '弹窗',
     imageViewer: '图片预览',
     descriptions: '描述',
@@ -170,7 +172,10 @@ export default {
     permission: '权限测试页',
     function: '功能',
     multipleTabs: '多开标签页',
-    details: '详情页'
+    details: '详情页',
+    iconPicker: '图标选择器',
+    request: '请求',
+    waterfall: '瀑布流'
   },
   permission: {
     hasPermission: '请设置操作权限值'
@@ -298,6 +303,8 @@ export default {
     verifyReset: '验证重置',
     // 富文本编辑器
     richText: '富文本编辑器',
+    // JSON编辑器
+    jsonEditor: 'JSON编辑器',
     form: '表单',
     // 远程加载
     remoteLoading: '远程加载',
@@ -311,7 +318,8 @@ export default {
     customContent: '自定义内容',
     lazyLoad: '懒加载',
     upload: '上传',
-    userAvatar: '用户头像'
+    userAvatar: '用户头像',
+    iconPicker: '图标选择器'
   },
   guideDemo: {
     guide: '引导页',
@@ -441,7 +449,9 @@ export default {
   },
   richText: {
     richText: '富文本',
-    richTextDes: '基于 wangeditor 二次封装'
+    richTextDes: '基于 wangeditor 二次封装',
+    jsonEditor: 'JSON编辑器',
+    jsonEditorDes: '基于 vue-json-pretty 二次封装'
   },
   dialogDemo: {
     dialog: '弹窗',

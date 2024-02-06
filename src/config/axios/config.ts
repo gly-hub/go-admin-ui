@@ -2,30 +2,12 @@ import {
   AxiosConfig,
   AxiosResponse,
   AxiosRequestHeaders,
-  AxiosError,
   InternalAxiosRequestConfig
 } from './types'
 import { ElMessage } from 'element-plus'
 import qs from 'qs'
 
 const config: AxiosConfig = {
-  /**
-   * api请求基础路径
-   */
-  baseUrl: {
-    // 开发环境接口前缀
-    base: '',
-
-    // 打包开发环境接口前缀
-    dev: '',
-
-    // 打包生产环境接口前缀
-    pro: '',
-
-    // 打包测试环境接口前缀
-    test: ''
-  },
-
   /**
    * 接口成功返回状态码
    */
@@ -76,10 +58,6 @@ const defaultRequestInterceptors = (config: InternalAxiosRequestConfig) => {
   }
   return config
 }
-;(error: AxiosError) => {
-  console.log(error)
-  Promise.reject(error)
-}
 
 const defaultResponseInterceptors = (response: AxiosResponse<any>) => {
   if (response?.config?.responseType === 'blob') {
@@ -88,13 +66,8 @@ const defaultResponseInterceptors = (response: AxiosResponse<any>) => {
   } else if (response.data.code === config.code) {
     return response.data
   } else {
-    ElMessage.error(response.data.message)
+    ElMessage.error((response as any).message)
   }
-}
-;(error: AxiosError) => {
-  console.log('err' + error) // for debug
-  ElMessage.error(error.message)
-  return Promise.reject(error)
 }
 
 export { defaultResponseInterceptors, defaultRequestInterceptors }

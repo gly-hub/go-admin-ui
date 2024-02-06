@@ -31,9 +31,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   return {
     base: env.VITE_BASE_PATH,
     plugins: [
-      Vue(),
+      Vue({
+        script: {
+          // 开启defineModel
+          defineModel: true
+        }
+      }),
       VueJsx(),
-      // WindiCSS(),
       progress(),
       createStyleImportPlugin({
         resolves: [ElementPlusResolve()],
@@ -142,10 +146,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         'qs',
         'echarts',
         'echarts-wordcloud',
-        'intro.js',
         'qrcode',
         '@wangeditor/editor',
-        '@wangeditor/editor-for-vue'
+        '@wangeditor/editor-for-vue',
+        'vue-json-pretty',
+        '@zxcvbn-ts/core',
+        'dayjs',
+        'mockjs'
       ]
     }
   }

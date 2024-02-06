@@ -1,10 +1,11 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import config, { defaultRequestInterceptors, defaultResponseInterceptors } from './config'
 
 import { AxiosInstance, InternalAxiosRequestConfig, RequestConfig, AxiosResponse } from './types'
+import { ElMessage } from 'element-plus'
 
-const { interceptors, baseUrl } = config
-export const PATH_URL = baseUrl[import.meta.env.VITE_API_BASE_PATH]
+const { interceptors } = config
+export const PATH_URL = import.meta.env.VITE_API_BASE_PATH
 
 const { requestInterceptors, responseInterceptors } = interceptors
 
@@ -27,9 +28,14 @@ axiosInstance.interceptors.response.use(
   (res: AxiosResponse) => {
     const url = res.config.url || ''
     abortControllerMap.delete(url)
-    return res.data
+    // 这里不能做任何处理，否则后面的 interceptors 拿不到完整的上下文了
+    return res
   },
-  (err: any) => err
+  (error: AxiosError) => {
+    console.log('err： ' + error) // for debug
+    ElMessage.error(error.message)
+    return Promise.reject(error)
+  }
 )
 
 axiosInstance.interceptors.request.use(requestInterceptors || defaultRequestInterceptors)
